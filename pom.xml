@@ -18,4 +18,11 @@
   <build>
     <finalName>QuestDianostics.app</finalName>
   </build>
+  <distributionManagement>
+    <repository>
+        <id>central</id>
+        <name>jenkins-releases</name>
+        <url>http://35.202.147.91:8081/artifactory/libs-release</url>
+    </repository>
+</distributionManagement>
 </project>
