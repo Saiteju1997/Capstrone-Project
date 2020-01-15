@@ -18,11 +18,16 @@
   <build>
     <finalName>QuestDianostics.app</finalName>
   </build>
-  <distributionManagement>
+ <distributionManagement>
     <repository>
         <id>central</id>
         <name>jenkins-releases</name>
-        <url>http://35.202.147.91:8081/artifactory/libs-release</url>
+        <url>http://35.238.49.199:8081/artifactory/libs-release-local</url>
     </repository>
+    <snapshotRepository>
+        <id>snapshots</id>
+        <name>jenkins-snapshots</name>
+        <url>http://35.238.49.199:8081/artifactory/libs-snapshot-local</url>
+    </snapshotRepository>
 </distributionManagement>
 </project>
