@@ -22,12 +22,12 @@
     <repository>
         <id>central</id>
         <name>jenkins-releases</name>
-        <url>http://35.238.49.199:8081/artifactory/libs-release-local</url>
+        <url>http://35.238.49.199:8081/artifactory/libs-release</url>
     </repository>
     <snapshotRepository>
         <id>snapshots</id>
         <name>jenkins-snapshots</name>
-        <url>http://35.238.49.199:8081/artifactory/libs-snapshot-local</url>
+        <url>http://35.238.49.199:8081/artifactory/libs-snapshot</url>
     </snapshotRepository>
 </distributionManagement>
 </project>
