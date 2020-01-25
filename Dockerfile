@@ -7,5 +7,5 @@ ENV PATH $PATH:$JAVA_HOME/bin
 WORKDIR /opt/tomcat
 ADD apache-tomcat-8.5.49.tar.gz .
 COPY QuestDianostics.app.war /opt/tomcat/apache-tomcat-8.5.49/webapps
-EXPOSE 6060
+EXPOSE 8080
 CMD ["/opt/tomcat/apache-tomcat-8.5.49/bin/catalina.sh","run"]
