@@ -6,6 +6,6 @@ ENV JAVA_HOME /opt/java/jdk-11.0.2
 ENV PATH $PATH:$JAVA_HOME/bin
 WORKDIR /opt/tomcat
 ADD apache-tomcat-8.5.49.tar.gz .
-COPY Myfirst_project-1.0-SNAPSHOT.jar /opt/tomcat/apache-tomcat-8.5.49/webapps
+COPY QuestDianostics.app-1.0-SNAPSHOT.war /opt/tomcat/apache-tomcat-8.5.49/webapps
 EXPOSE 6060
 CMD ["/opt/tomcat/apache-tomcat-8.5.49/bin/catalina.sh","run"]
