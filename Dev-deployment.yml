@@ -18,7 +18,7 @@ spec:
         app: Dev
     spec:
       containers:
-      - image: qdrscore.V1:latest
+      - image: qdrscore1.v1:latest
         name: qdrs
         ports:
         - containerPort: 8080
