@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: qdrs-core
+  labels:
+    app: Dev
+  namespace: dev-deployment
+  annotations:
+    monitoring: "true"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: Dev
+  template:
+    metadata:
+      labels:
+        app: Dev
+    spec:
+      containers:
+      - image: qdrscore.V1:latest
+        name: qdrs
+        ports:
+        - containerPort: 8080
+        resources:
+          limits:
+            memory: "2Gi"
+            cpu: "1000m"
+          requests:
+            memory: "1Gi"
+            cpu: "500m"
