@@ -9,7 +9,7 @@ node('Slave1'){
         sh 'mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.3.0.603:sonar'
     }
         withSonarQubeEnv('Sonar') {
-        sh '${mavenhome}/bin/mvn sonar:sonar -Dsonar.host.url=http://35.188.100.185:8000/'
+        sh '${mavenhome}/bin/mvn sonar:sonar -Dsonar.host.url=http://10.128.0.14:8000/'
      }
   }
 }
