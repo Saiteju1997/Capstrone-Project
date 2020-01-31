@@ -29,6 +29,7 @@ node('Docker-master'){
     }
     stage("copying Docker file and removig all the files"){
         sh 'cp -pr Dockerfile /inet/projects'
+        sh 'cp -pr target/*.war /inet/projects'
         sh 'rm -rf *'
     }
     stage("Building the Docker image"){
