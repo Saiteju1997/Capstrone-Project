@@ -60,9 +60,9 @@ metadata:
 spec:
   ports:
   - nodePort: 30000
-    port: 80
+    port: 8080
     protocol: TCP
-    targetPort: 80
+    targetPort: 8080
   selector:
     app: Prod
   type: NodePort
