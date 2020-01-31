@@ -9,6 +9,12 @@ node('Slave1'){
         sh 'mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.3.0.603:sonar'
     }
   }
+    stage("sonar scanner execution"){
+        def scannerHome = tool 'Sonar-3.2';
+        withSonarQubeEnv('Sonar') {
+          sh """${scannerHome}/bin/sonar-scanner -D sonar.login=admin -D sonar.password=admin"""
+        }
+    }    
 }
 node{
     stage("git clone"){
@@ -22,16 +28,14 @@ node{
         rtMaven.tool = 'Maven2'
         def buildInfo = rtMaven.run pom: 'pom.xml', goals: 'clean install'
     }
-    stage("using publish over ssh"){
-        sshPublisher(publishers: [sshPublisherDesc(configName: 'Docker-master', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: '', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '//inet//projects', remoteDirectorySDF: false, removePrefix: 'target', sourceFiles: 'target/*.war')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])      
+    stage("copying required files"){
+        sh "scp -o StrictHostKeyChecking=no target/*.war root@docker-master:/inet/projects"
+        sh "scp -o StrictHostKeyChecking=no Dockerfile root@docker-master:/inet/projects"
+        sh "scp -o StrictHostKeyChecking=no kubernetes-deployment.yml root@k8smaster:/inet/projects"
    }
  }  
 node('Docker-master'){
-    stage("git clone"){
-        checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'GITHUB', url: 'https://github.com/Saiteju1997/Capstrone-Project.git']]])
-    }
-    stage("Building the Docker image"){
-        sh 'cp -pr /inet/workspace/practice3/Dockerfile /inet/projects'
+    stage("Building the Docker image"){ 
         sh 'docker build -t qdrs.app.v1.$BUILD_ID /inet/projects'
         sh 'docker tag qdrs.app.v1.$BUILD_ID steju480/qdrs.app.v1.$BUILD_ID'
         sh 'docker tag qdrs.app.v1.$BUILD_ID steju480/qdrs.app.v1'
@@ -48,4 +52,8 @@ node('Docker-master'){
           }                        
       }  
  }                             
-        
+ node('kubernetes'){
+     stage("deploying the app"){
+        sh "kubectl create -f /inet/projects/kubernetes-deployment.yml"
+  }
+}      
