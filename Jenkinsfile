@@ -33,7 +33,7 @@ node('Docker-master'){
     }
     stage("Building the Docker image"){
         sh 'docker build -t qdrs.app.v1.$BUILD_ID /inet/projects/Dockerfile'
-        sh 'docker tag qdrs.app.v1.$BUILD_ID' steju480/qdrs.app.v1.$BUILD_ID'
+        sh 'docker tag qdrs.app.v1.$BUILD_ID steju480/qdrs.app.v1.$BUILD_ID'
         sh 'docker tag qdrs.app.v1.$BUILD_ID steju480/qdrs.app.v1'
     }
     stage("Docker image push"){
