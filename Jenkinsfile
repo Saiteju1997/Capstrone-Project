@@ -21,6 +21,7 @@ node{
         rtMaven.deployer server: server, releaseRepo: 'libs-release-local', snapshotRepo: 'libs-snapshot-local'
         rtMaven.tool = 'Maven2'
         def buildInfo = rtMaven.run pom: 'pom.xml', goals: 'clean install'
+        sh 'scp -pr target/*.war Dockerfile root@docker-master:/inet/projects'      
    }
  }
 node('Docker-master'){
