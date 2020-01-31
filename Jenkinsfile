@@ -25,14 +25,6 @@ node{
    }
  }
 node('Docker-master'){
-    stage("git clone"){
-        checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'GITHUB', url: 'https://github.com/Saiteju1997/Capstrone-Project.git']]])
-    }
-    stage("copying Docker file and removig all the files"){
-        sh 'cp -pr Dockerfile /inet/projects'
-        sh 'cp -pr target/*.war /inet/projects'
-        sh 'rm -rf *'
-    }
     stage("Building the Docker image"){
         sh 'docker build -t qdrs.app.v1.$BUILD_ID /inet/projects'
         sh 'docker tag qdrs.app.v1.$BUILD_ID steju480/qdrs.app.v1.$BUILD_ID'
