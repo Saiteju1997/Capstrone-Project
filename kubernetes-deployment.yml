@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: dev-deployment
+  name: prod-deployment
   labels:
     apps: web-based
   annotations:
@@ -10,7 +10,7 @@ apiVersion: v1
 kind: ResourceQuota
 metadata:
   name: mem-cpu-quota
-  namespace: dev-deployment
+  namespace: prod-deployment
 spec:
   hard:
     requests.cpu: "4"
@@ -23,22 +23,22 @@ kind: Deployment
 metadata:
   name: qdrs-core
   labels:
-    app: Dev
-  namespace: dev-deployment
+    app: Prod
+  namespace: prod-deployment
   annotations:
     monitoring: "true"
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: Dev
+      app: Prod
   template:
     metadata:
       labels:
-        app: Dev
+        app: Prod
     spec:
       containers:
-      - image: steju480/qdrscore1.v1:latest
+      - image: steju480/qdrs.app.v1:latest
         name: qdrs
         ports:
         - containerPort: 8080
@@ -54,9 +54,9 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    app: Dev
-  name: dev-service
-  namespace: dev-deployment
+    app: Prod
+  name: prod-service
+  namespace: prod-deployment
 spec:
   ports:
   - nodePort: 30000
@@ -64,5 +64,5 @@ spec:
     protocol: TCP
     targetPort: 80
   selector:
-    app: Dev
+    app: Prod
   type: NodePort
