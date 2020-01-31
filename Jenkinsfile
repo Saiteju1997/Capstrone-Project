@@ -53,7 +53,8 @@ node('Docker-master'){
       }  
  }                             
  node('kubernetes'){
-     stage("deploying the app"){
+     stage("deploying the app"){     
+        sh "kubectl delete -f /inet/projects/kubernetes-deployment.yml"
         sh "kubectl create -f /inet/projects/kubernetes-deployment.yml"
   }
 }      
