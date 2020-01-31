@@ -36,7 +36,7 @@ node('Docker-master'){
         sh 'docker tag Steju480/QDRS.app.V1.$BUILD_ID Steju480/QDRS.app.V1'
     }
     stage("Docker image push"){
-        withCredentials([string(credentialsId: 'DockerHub-passwd', variable: 'DockerHub'')]) {
+        withCredentials([string(credentialsId: 'DockerHub-passwd', variable: 'DockerHub')]){
             sh 'docker login -u Steju480 -p $DockerHub'
             sh 'docker push Steju480/QDRS.app.V1.$BUILD_ID'
             sh 'docker push Steju480/QDRS.app.V1'
