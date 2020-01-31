@@ -32,8 +32,8 @@ node('Docker-master'){
         sh 'rm -rf *'
     }
     stage("Building the Docker image"){
-        sh 'docker build -t Steju480/QDRS.app.V1.$BUILD_ID /inet/projects/Dockerfile'
-        sh 'docker tag Steju480/QDRS.app.V1.$BUILD_ID Steju480/QDRS.app.V1'
+        sh 'docker build -t Steju480/qdrs.app.v1.$BUILD_ID /inet/projects/Dockerfile'
+        sh 'docker tag Steju480/qdrs.app.v1.$BUILD_ID Steju480/qdrs.app.v1'
     }
     stage("Docker image push"){
         withCredentials([string(credentialsId: 'DockerHub-passwd', variable: 'DockerHub')]){
