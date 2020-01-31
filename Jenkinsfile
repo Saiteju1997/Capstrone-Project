@@ -8,9 +8,6 @@ node('Slave1'){
         withSonarQubeEnv('Sonar') {
         sh 'mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.3.0.603:sonar'
     }
-        withSonarQubeEnv('Sonar') {
-        sh '${mavenhome}/bin/mvn sonar:sonar -Dsonar.host.url=http://10.128.0.14:8000/'
-     }
   }
 }
 node{
@@ -24,5 +21,5 @@ node{
         rtMaven.deployer server: server, releaseRepo: 'libs-release-local', snapshotRepo: 'libs-snapshot-local'
         rtMaven.tool = 'Maven2'
         def buildInfo = rtMaven.run pom: 'pom.xml', goals: 'clean install'
-  }
+   }
  }
