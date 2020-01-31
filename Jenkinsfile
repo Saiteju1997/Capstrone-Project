@@ -38,11 +38,11 @@ node('Docker-master'){
     }
     stage("Docker image push"){
         withCredentials([string(credentialsId: 'DockerHub-passwd', variable: '')]) {
-            sh 'docker login -u Steju480 -p ${DockerHub-passwd}'
-            sh 'docker push Steju480/QDRS.app.V1.$BUILD_ID'
-            sh 'docker push Steju480/QDRS.app.V1'
-            sh 'docker rmi Steju480/QDRS.app.V1.$BUILD_ID'
-            sh 'docker rmi Steju480/QDRS.app.V1' 
+            sh 'docker login -u steju480 -p ${DockerHub-passwd}'
+            sh 'docker push steju480/QDRS.app.V1.$BUILD_ID'
+            sh 'docker push steju480/QDRS.app.V1'
+            sh 'docker rmi steju480/QDRS.app.V1.$BUILD_ID'
+            sh 'docker rmi steju480/QDRS.app.V1' 
             sh 'docker rmi qdrs.app.v1.$BUILD_ID'
           }                        
       }  
