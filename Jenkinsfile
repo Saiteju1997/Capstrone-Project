@@ -39,10 +39,10 @@ node('Docker-master'){
     stage("Docker image push"){
         withCredentials([usernameColonPassword(credentialsId: 'dockerhub', variable: 'dockerhub')]) {
             sh 'docker login -u steju480 -p Steju@1997'
-            sh 'docker push steju480/qdrs.app.V1.$BUILD_ID'
-            sh 'docker push steju480/qdrs.app.V1'
-            sh 'docker rmi steju480/qdrs.app.V1.$BUILD_ID'
-            sh 'docker rmi steju480/qdrs.app.V1' 
+            sh 'docker push steju480/qdrs.app.v1.$BUILD_ID'
+            sh 'docker push steju480/qdrs.app.v1'
+            sh 'docker rmi steju480/qdrs.app.v1.$BUILD_ID'
+            sh 'docker rmi steju480/qdrs.app.v1' 
             sh 'docker rmi qdrs.app.v1.$BUILD_ID'
           }                        
       }  
