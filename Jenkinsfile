@@ -32,8 +32,9 @@ node('Docker-master'){
         sh 'rm -rf *'
     }
     stage("Building the Docker image"){
-        sh 'docker build -t Steju480/qdrs.app.v1.$BUILD_ID /inet/projects/Dockerfile'
-        sh 'docker tag Steju480/qdrs.app.v1.$BUILD_ID Steju480/qdrs.app.v1'
+        sh 'docker build -t qdrs.app.v1.$BUILD_ID /inet/projects/Dockerfile'
+        sh 'docker tag qdrs.app.v1.$BUILD_ID' steju480/qdrs.app.v1.$BUILD_ID'
+        sh 'docker tag qdrs.app.v1.$BUILD_ID steju480/qdrs.app.v1'
     }
     stage("Docker image push"){
         withCredentials([string(credentialsId: 'DockerHub-passwd', variable: 'DockerHub')]){
@@ -42,6 +43,7 @@ node('Docker-master'){
             sh 'docker push Steju480/QDRS.app.V1'
             sh 'docker rmi Steju480/QDRS.app.V1.$BUILD_ID'
             sh 'docker rmi Steju480/QDRS.app.V1' 
+            sh 'docker rmi qdrs.app.v1.$BUILD_ID'
           }                        
       }  
  }                             
