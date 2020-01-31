@@ -21,11 +21,15 @@ node{
         rtMaven.deployer server: server, releaseRepo: 'libs-release-local', snapshotRepo: 'libs-snapshot-local'
         rtMaven.tool = 'Maven2'
         def buildInfo = rtMaven.run pom: 'pom.xml', goals: 'clean install'
-        sh 'scp -pr target/*.war Dockerfile root@docker-master:/inet/projects'      
+        sshPublisher(publishers: [sshPublisherDesc(configName: 'Docker-master', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: '', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '//inet//projects', remoteDirectorySDF: false, removePrefix: 'target', sourceFiles: 'target/*.war')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])      
    }
  }
 node('Docker-master'){
+    stage("git clone"){
+        checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'GITHUB', url: 'https://github.com/Saiteju1997/Capstrone-Project.git']]])
+    }
     stage("Building the Docker image"){
+        sh 'cp -pr /inet/workspace/practice3/Dockerfile /inet/projects'
         sh 'docker build -t qdrs.app.v1.$BUILD_ID /inet/projects'
         sh 'docker tag qdrs.app.v1.$BUILD_ID steju480/qdrs.app.v1.$BUILD_ID'
         sh 'docker tag qdrs.app.v1.$BUILD_ID steju480/qdrs.app.v1'
