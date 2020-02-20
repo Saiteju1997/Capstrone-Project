@@ -4,7 +4,7 @@ node('Slave1'){
       }
     stage('SonarQube analysis') {
         def scannerHome = tool 'Sonar-3.2';
-        def mavenhome = tool  name: 'Maven2' , type: 'maven';
+        def mavenhome = tool  name: 'Maven' , type: 'maven';
         withSonarQubeEnv('Sonar') {
         sh 'mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.3.0.603:sonar'
     }
@@ -15,17 +15,12 @@ node('Slave1'){
           sh """${scannerHome}/bin/sonar-scanner -D sonar.login=admin -D sonar.password=admin"""
         }
     }    
-}
-node{
-    stage("git clone"){
-        checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'GITHUB', url: 'https://github.com/Saiteju1997/Capstrone-Project.git']]])
-    }
     stage("deploying artifacts"){
         def server = Artifactory.server 'jfrog'
         def rtMaven = Artifactory.newMavenBuild()
         rtMaven.resolver server: server, releaseRepo: 'libs-release', snapshotRepo: 'libs-snapshot'
         rtMaven.deployer server: server, releaseRepo: 'libs-release-local', snapshotRepo: 'libs-snapshot-local'
-        rtMaven.tool = 'Maven2'
+        rtMaven.tool = 'Maven'
         def buildInfo = rtMaven.run pom: 'pom.xml', goals: 'clean install'
     }
     stage("copying required files"){
