@@ -4,7 +4,7 @@ node('Slave1'){
       }
     stage('SonarQube analysis') {
         def scannerHome = tool 'Sonar-3.2';
-        def mavenhome = tool  name: 'Maven' , type: 'maven';
+        def mavenhome = tool  name: 'Maven2' , type: 'maven';
         withSonarQubeEnv('Sonar') {
         sh 'mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.3.0.603:sonar'
     }
@@ -20,7 +20,7 @@ node('Slave1'){
         def rtMaven = Artifactory.newMavenBuild()
         rtMaven.resolver server: server, releaseRepo: 'libs-release', snapshotRepo: 'libs-snapshot'
         rtMaven.deployer server: server, releaseRepo: 'libs-release-local', snapshotRepo: 'libs-snapshot-local'
-        rtMaven.tool = 'Maven'
+        rtMaven.tool = 'Maven2'
         def buildInfo = rtMaven.run pom: 'pom.xml', goals: 'clean install'
     }
     stage("copying required files"){
