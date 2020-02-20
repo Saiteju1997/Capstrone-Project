@@ -58,4 +58,3 @@ node('Docker-master'){
         sh "kubectl create -f /inet/projects/kubernetes-deployment.yml"
   }
 }      
-
